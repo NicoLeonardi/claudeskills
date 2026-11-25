@@ -1,0 +1,564 @@
+{
+  "info": {
+    "name": "Datadog Sandbox API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01 - Auth and read-only",
+      "item": [
+        {
+          "name": "Validate API key",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('key is valid', () => pm.expect(pm.response.json().valid).to.eql(true));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/validate",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "validate"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List monitors",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('returns array', () => pm.expect(pm.response.json()).to.be.an('array'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/monitor?page_size=5",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "monitor"
+              ],
+              "query": [
+                {
+                  "key": "page_size",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List dashboards",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('has dashboards key', () => pm.expect(pm.response.json()).to.have.property('dashboards'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/dashboard",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "dashboard"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('has data array', () => pm.expect(pm.response.json().data).to.be.an('array'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v2/users?page[size]=5",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page[size]",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List synthetics tests",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('has tests key', () => pm.expect(pm.response.json()).to.have.property('tests'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/synthetics/tests",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "synthetics",
+                "tests"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Metric query (last hour)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('status ok', () => pm.expect(pm.response.json().status).to.eql('ok'));"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const now=Math.floor(Date.now()/1000);",
+                  "pm.collectionVariables.set('to', now);",
+                  "pm.collectionVariables.set('from', now-3600);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/query?from={{from}}&to={{to}}&query=avg:system.cpu.user{*}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "query"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "{{from}}"
+                },
+                {
+                  "key": "to",
+                  "value": "{{to}}"
+                },
+                {
+                  "key": "query",
+                  "value": "avg:system.cpu.user{*}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Bad key is rejected",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 403', () => pm.response.to.have.status(403));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "invalid-key-for-negative-test"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/validate",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "validate"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Write and cleanup (sandbox only)",
+      "item": [
+        {
+          "name": "Create monitor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "const j=pm.response.json();",
+                  "pm.test('has id', () => pm.expect(j.id).to.be.a('number'));",
+                  "pm.collectionVariables.set('monitor_id', j.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/monitor",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "monitor"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"postman-test-monitor\",\n  \"type\": \"metric alert\",\n  \"query\": \"avg(last_5m):avg:system.cpu.user{*} > 99\",\n  \"message\": \"Created by Postman sandbox test\",\n  \"tags\": [\n    \"postman-test\"\n  ],\n  \"options\": {\n    \"thresholds\": {\n      \"critical\": 99\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Get monitor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('name matches', () => pm.expect(pm.response.json().name).to.eql('postman-test-monitor'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/monitor/{{monitor_id}}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "monitor",
+                "{{monitor_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete monitor",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('deleted id returned', () => pm.expect(pm.response.json()).to.have.property('deleted_monitor_id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/monitor/{{monitor_id}}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "monitor",
+                "{{monitor_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Monitor is gone",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status is 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "DD-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "DD-APPLICATION-KEY",
+                "value": "{{app_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.{{site}}/api/v1/monitor/{{monitor_id}}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "{{site}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "monitor",
+                "{{monitor_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "monitor_id",
+      "value": ""
+    },
+    {
+      "key": "from",
+      "value": ""
+    },
+    {
+      "key": "to",
+      "value": ""
+    }
+  ]
+}
